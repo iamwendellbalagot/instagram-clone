@@ -1,4 +1,19 @@
 .home {
-  height: 100vh;
+  height: 100%;
+  display: flex;
   background-color: #fafafa;
+  justify-content: center;
+  padding-top: 80px;
+}
+
+.home__left {
+  flex: 0.7;
+}
+
+.home__right {
+  flex: 0.3;
+  max-height: 500px;
+  background-color: white;
+  margin-right: 10%;
+  width: 100%;
 }

@@ -1,0 +1,68 @@
+.createpost {
+  background-color: white;
+  margin: auto 20px;
+  margin-left: 25%;
+  margin-bottom: 30px;
+  border-radius: 5px;
+  max-width: 615px;
+  border: 1px solid #dbdbdb;
+}
+
+.createpost__form {
+  display: flex;
+  flex-direction: column;
+}
+
+.createpost__form > hr {
+  border-top: 1px solid #dbdbdb;
+  margin: auto 1%;
+}
+
+.createpost__form > textarea {
+  resize: none;
+  outline: none;
+  height: 50px;
+  border: none;
+  border-radius: 5px;
+  text-indent: 10px;
+  padding: 10px;
+}
+
+.form__controls {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.form__controls > label {
+  margin-left: 20px;
+  opacity: 0.8;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 200ms;
+}
+
+.form__controls > label:hover {
+  font-weight: 700;
+  transform: scale(1.05);
+  opacity: 0.7;
+}
+
+.form__controls > button {
+  outline: none;
+  background-color: white;
+  border: none;
+  opacity: 0.8;
+  margin-right: 20px;
+  cursor: pointer;
+  transition: all 200ms;
+}
+
+.form__controls > button:hover {
+  font-weight: 700;
+  transform: scale(1.08);
+}
+
+.form__controls__label > input {
+  display: none;
+}

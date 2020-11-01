@@ -1,0 +1,62 @@
+.post {
+  max-width: 615px;
+  min-height: 650px;
+  background-color: white;
+  margin-left: 25%;
+  margin-right: 20px;
+  margin-bottom: 50px;
+  border: solid 1px #dbdbdb;
+  border-radius: 5px;
+}
+
+.post > img {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+
+.post__header {
+  display: flex;
+  height: 50px;
+  border: solid 1px #dbdbdb;
+  align-items: center;
+}
+
+.post__header > span {
+  font-weight: 700;
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.post__header__avatar {
+  margin: auto 10px auto 15px;
+}
+
+.post__form {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px auto;
+  align-items: center;
+}
+
+.post__form > input {
+  outline: none;
+  border: none;
+  padding: 10px;
+}
+
+.post__form > button {
+  background-color: white;
+  color: #0095f6;
+  font-weight: 700;
+  outline: none;
+  border: none;
+  font-size: 15px;
+  margin-right: 20px;
+  cursor: pointer;
+  transition: all 200ms;
+}
+
+.post__form > button:hover {
+  transform: scale(1.08);
+}
