@@ -2,6 +2,7 @@ import React from 'react';
 import './Log.css';
 
 import LoginForm from '../../components/LoginForm/LoginForm';
+import Signup from '../../components/Signup/Signup';
 
 const Log = () => {
     return (
@@ -9,7 +10,8 @@ const Log = () => {
             <div className='log__image'>
                 <img src='gram__login__photo.png' alt='Background'/>
             </div>
-            <LoginForm /> 
+            {/* <LoginForm />  */}
+            <Signup />
         </div>
     )
 }
