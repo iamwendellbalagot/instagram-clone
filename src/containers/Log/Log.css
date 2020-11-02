@@ -1,0 +1,7 @@
+.log {
+  height: 100vh;
+  display: flex;
+  background-color: #fafafa;
+  justify-content: center;
+  align-items: center;
+}
