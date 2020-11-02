@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
+import {auth} from '../../firebase';
 import './Signup.css';
 
 const Signup = () => {
@@ -13,6 +14,17 @@ const Signup = () => {
     const handleSubmit = event =>{ 
         event.preventDefault();
         console.log(email, fullname, username, password, confPassword)
+        auth.createUserWithEmailAndPassword(email, password)
+        .then( user =>{
+            user.user.updateProfile({
+                displayName: username + '%20' +fullname 
+            })
+            .then(res => {
+                console.log('Account Created with display name')
+            })
+            .catch(err => console.log(err.message))
+        })
+        .catch(err => console.log(err.message))
     }
 
     return (
