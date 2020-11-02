@@ -1,26 +1,34 @@
 import React, {useState, useEffect } from 'react';
+import { Redirect, Link } from 'react-router-dom';
+import {useStateValue} from '../../hoc/stateProvider';
 import './LoginForm.css';
 
 import { auth } from '../../firebase';
 
 
-const LoginForm = () => {
+const LoginForm = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    useEffect(() => {
-        const unsubscribe =  auth.onAuthStateChanged(userAuth => {
-            if(userAuth){
-                console.log(userAuth)
-            }else{
-                console.log('Not logged in')
-            }
-        })
+    const [{user}, dispatch] = useStateValue();
 
-        return () => {
-            unsubscribe();
-        }
-    }, [])
+    // useEffect(() => {
+    //     const unsubscribe =  auth.onAuthStateChanged(userAuth => {
+    //         if(userAuth){
+    //             dispatch({
+    //                 type:'SET_USER',
+    //                 user:userAuth
+    //             })
+    //             console.log(userAuth)
+    //         }else{
+    //             console.log('Not logged in')
+    //         }
+    //     })
+
+    //     return () => {
+    //         unsubscribe();
+    //     }
+    // }, [user])
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -50,7 +58,7 @@ const LoginForm = () => {
             </div>
             <div className='loginform__signup'>
                 <p>Don't have an account?</p>
-                <span>Sign up</span>
+                <Link to='/signup' className='loginform__signup__btn'>Sign up</Link>
             </div>
         </div>
         

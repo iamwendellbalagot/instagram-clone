@@ -1,9 +1,22 @@
 import React from 'react';
+import {Redirect} from 'react-router-dom';
+import {useStateValue} from '../../hoc/stateProvider';
+import {auth} from '../../firebase';
 import './Header.css';
 
 import Avatar from '@material-ui/core/Avatar';
 
 const Header = () => {
+
+    const [{user}, dispatch] = useStateValue();
+
+    const handleSignOut = () => {   
+        auth.signOut()
+        dispatch({
+            type: 'SET_USER',
+            user: null
+        })
+    }
 
     return (
         <div className='header'>
@@ -11,7 +24,7 @@ const Header = () => {
                 src='https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png'
                 alt='Logo'/>
             <div className='header__user'>
-                <button>Logout</button>
+                <button onClick={handleSignOut}>Logout</button>
                 <Avatar />
             </div>
             

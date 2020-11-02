@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -9,9 +10,11 @@ import reducer, { initialState } from './reducer/reducer';
 
 ReactDOM.render(
   <React.StrictMode>
-    <StateProvider reducer={reducer} initialState={initialState}>
-      <App />
-    </StateProvider>
+    <BrowserRouter>
+      <StateProvider reducer={reducer} initialState={initialState}>
+        <App />
+      </StateProvider>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );

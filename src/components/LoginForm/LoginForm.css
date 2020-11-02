@@ -76,10 +76,11 @@
   font-size: 15px;
 }
 
-.loginform__signup > span {
+.loginform__signup__btn {
   margin-left: 5px;
   color: #0095f6;
   font-weight: 700;
   font-size: 15px;
   cursor: pointer;
+  text-decoration: none;
 }
