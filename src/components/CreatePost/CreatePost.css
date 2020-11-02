@@ -13,11 +13,6 @@
   flex-direction: column;
 }
 
-.createpost__form > hr {
-  border-top: 1px solid #dbdbdb;
-  margin: auto 1%;
-}
-
 .createpost__form > textarea {
   resize: none;
   outline: none;
@@ -36,14 +31,14 @@
 
 .form__controls > label {
   margin-left: 20px;
-  opacity: 0.8;
+  color: #0095f6;
+  font-weight: 700;
   font-size: 15px;
   cursor: pointer;
   transition: all 200ms;
 }
 
 .form__controls > label:hover {
-  font-weight: 700;
   transform: scale(1.05);
   opacity: 0.7;
 }
@@ -52,17 +47,22 @@
   outline: none;
   background-color: white;
   border: none;
-  opacity: 0.8;
+  color: #0095f6;
+  font-weight: 700;
   margin-right: 20px;
   cursor: pointer;
   transition: all 200ms;
 }
 
 .form__controls > button:hover {
-  font-weight: 700;
   transform: scale(1.08);
 }
 
 .form__controls__label > input {
   display: none;
+}
+
+.form__controls__filename > span {
+  font-size: 15px;
+  opacity: 0.8;
 }

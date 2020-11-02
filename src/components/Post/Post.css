@@ -11,7 +11,7 @@
 
 .post > img {
   object-fit: cover;
-  height: 100%;
+  height: 600px;
   width: 100%;
 }
 
@@ -30,6 +30,11 @@
 
 .post__header__avatar {
   margin: auto 10px auto 15px;
+}
+
+.post__caption {
+  font-size: 15px;
+  margin-left: 15px;
 }
 
 .post__form {

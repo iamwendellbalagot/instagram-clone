@@ -16,4 +16,6 @@
   background-color: white;
   margin-right: 10%;
   width: 100%;
+  border: 1px solid #dbdbdb;
+  border-radius: 5px;
 }

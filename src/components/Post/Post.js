@@ -1,20 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { db } from '../../firebase';
 import './Post.css';
 
 import Avatar from '@material-ui/core/Avatar';
 
-const Post = () => {
+const Post = ({postUser, postImage, postCaption, postID}) => {
+
+    const [commentBox, setCommentBox] = useState('');
+
+    const handleCommentSubmit = (event) => {
+        event.preventDefault();
+        console.log(commentBox)
+        db.collection('posts')
+        .doc(postID)
+        .collection('comments')
+        .add({
+            user: 'wendell',
+            comment: commentBox
+        })
+    }
+
     return (
         <div className='post'>
             <div className='post__header'>
                 <Avatar className='post__header__avatar'/>
-                <span>Username</span>
+                <span>{postUser}</span>
             </div>
             <img 
-                src='https://i.guim.co.uk/img/media/11d4c182d094199e26ddb36febe67123a9bbc93a/34_246_2966_4275/master/2966.jpg?width=300&quality=45&auto=format&fit=max&dpr=2&s=7eb0ab5367140724ef58182973ba5633'
+                src={postImage}
                 alt='Post' />
-            <form className='post__form'>
-                <input type='text' placeholder='Add a comment...'/>
+            <p className='post__caption'><strong>{postUser}</strong> {postCaption}</p>
+            <form className='post__form' onSubmit={handleCommentSubmit} >
+                <input type='text' placeholder='Add a comment...' onChange={(e) => setCommentBox(e.target.value)} />
                 <button type='submit'>Post</button>
             </form>
         </div>

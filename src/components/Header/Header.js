@@ -4,6 +4,7 @@ import './Header.css';
 import Avatar from '@material-ui/core/Avatar';
 
 const Header = () => {
+
     return (
         <div className='header'>
             <img 
