@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useStateValue} from '../../hoc/stateProvider';
 import {Link} from 'react-router-dom';
 import {auth} from '../../firebase';
@@ -11,11 +11,26 @@ const Signup = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confPassword, setConfPassword] = useState('');
+    const [errorMsg, setErrorMsg] = useState(false);
+    const [btnStatus, setBtnstatus] = useState(false);
 
     const [{user}, dispatch] = useStateValue();
 
+    useEffect(() =>{
+        if(username.trim().length !== 0 && fullname.trim().length !==0
+            && password.trim().length > 5 && confPassword.trim().length > 5){
+                setBtnstatus(true);
+        }else{
+            setBtnstatus(false);
+        }
+    }, [email, password,confPassword, fullname, username])
+
     const handleSubmit = event =>{ 
         event.preventDefault();
+        if(password !== confPassword){
+            setErrorMsg('auth/password-not-matched');
+            return 
+        }
         dispatch({
             type: 'SET_USERNAME',
             username: username
@@ -32,9 +47,11 @@ const Signup = () => {
             .then(res => {
                 console.log('Account Created with display name')
             })
-            .catch(err => console.log(err.message))
+            .catch(err => console.log(err))
         })
-        .catch(err => console.log(err.message))
+        .catch(err => {
+            setErrorMsg(err.code)
+        })
     }
 
     return (
@@ -46,6 +63,7 @@ const Signup = () => {
                     <input 
                         type='email'  
                         placeholder='Type your email here'
+                        className = {errorMsg==='auth/email-already-in-use'? 'error' : ''}
                         value={email} 
                         onChange={(e)=>setEmail(e.target.value)} />
                     <input 
@@ -61,16 +79,18 @@ const Signup = () => {
                     <input 
                         type='password' 
                         placeholder='Password'
+                        className={errorMsg==='auth/password-not-matched'? 'error' : ''}
                         value={password} 
                         onChange={(e) => setPassword(e.target.value)} />
                     <input 
                         type='password' 
                         placeholder='Confirm Password'
+                        className={errorMsg==='auth/password-not-matched'? 'error' : ''}
                         value={confPassword} 
                         onChange={(e) => setConfPassword(e.target.value)} />
                     
                         
-                    <button type='submit'>Sign up</button>
+                    <button disabled={!btnStatus} type='submit'>Sign up</button>
                 </form>
             </div>
             <div className='signup__login'>

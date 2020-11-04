@@ -76,6 +76,11 @@
   cursor: pointer;
 }
 
+.signup__form > button:disabled {
+  background-color: gray;
+  cursor: default;
+}
+
 .signup__login > p {
   color: black;
   opacity: 0.7;
@@ -89,4 +94,12 @@
   font-size: 15px;
   cursor: pointer;
   text-decoration: none;
+}
+
+.error {
+  border: 2px solid salmon !important;
+}
+
+.error:focus {
+  border: 2px solid salmon !important;
 }
