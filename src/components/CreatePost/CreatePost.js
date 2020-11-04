@@ -1,14 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import firebase from 'firebase';
-import { db, storage } from '../../firebase';
+import { auth, db, storage } from '../../firebase';
+import {useStateValue} from '../../hoc/stateProvider';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import './CreatePost.css';
 
-const CreatePost = () => {
+const CreatePost = ({username, uid, userPhoto}) => {
     const [image, setImage] = useState(null);
     const [progress, setProgress] = useState(0);
     const [caption, setCaption] = useState('');
-    const [username, setUsername] = useState('wendell');
+    const [{user}, dispatch] = useStateValue();
+    const [postStatus, setPostStatus] = useState(false);
+
+    useEffect(() => {
+        if(image && caption){
+            setPostStatus(true);
+        }
+    }, [image, caption])
 
     const handleImageChange = (event) =>{
         setImage(event.target.files[0]);
@@ -40,8 +48,17 @@ const CreatePost = () => {
                         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                         caption: caption,
                         username: username,
-                        imageURL: res
+                        imageURL: res,
+                        userPhoto: userPhoto,
+                        userUID: uid
                     });
+                    auth.onAuthStateChanged(userAuth =>{
+                        console.log('Got here')
+                        dispatch({
+                            type:'SET_USER',
+                            user: userAuth
+                        })
+                    })
                     setImage(null);
                     setCaption('');
                     setProgress(0);
@@ -68,7 +85,7 @@ const CreatePost = () => {
                     <div className='form__controls__filename'>
                         <span>{truncateText(image?.name, 20)}</span>
                     </div>
-                    <button type='submit'>Post</button>
+                    <button type='submit' disabled={!postStatus} >Post</button>
                 </div>
             </form>
         </div>

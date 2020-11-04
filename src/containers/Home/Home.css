@@ -1,7 +1,6 @@
 .home {
   height: 100%;
   display: flex;
-  background-color: #fafafa;
   justify-content: center;
   padding-top: 80px;
 }
@@ -13,9 +12,9 @@
 .home__right {
   flex: 0.3;
   max-height: 500px;
-  background-color: white;
+  /* background-color: white; */
   margin-right: 10%;
   width: 100%;
-  border: 1px solid #dbdbdb;
-  border-radius: 5px;
+  /* border: 1px solid #dbdbdb;
+  border-radius: 5px; */
 }

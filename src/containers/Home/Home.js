@@ -6,13 +6,15 @@ import './Home.css';
 import Header from '../../components/Header/Header';
 import CreatePost from '../../components/CreatePost/CreatePost';
 import Post from '../../components/Post/Post';
+import SideObject from '../../components/SideObject/SideObject';
 
 const Home = () => {
 
     const [posts, setPost] = useState([]);
-    const [{user}, dispatch] = useStateValue();
-    const [username, setUsername] = useState('')
-    const [fullname, setFullname] = useState('');
+    const [{user, username, fullname, userPosts}, dispatch] = useStateValue();
+    // const [username, setUsername] = useState('')
+    // const [fullname, setFullname] = useState('');
+
 
     useEffect(() =>{
         db.collection('posts')
@@ -23,28 +25,59 @@ const Home = () => {
                 posts: doc.data()
             })))
         })
-
-        let userInfo = user.displayName.split('%20')
-        setUsername(userInfo[0]);
-        setFullname(userInfo[1]);
     }, [])
+
+    useEffect(() => {
+        if(user.uid){
+            db.collection('posts')
+            .where('userUID', '==', user.uid)
+            .get()
+            .then(res => { 
+               dispatch({
+                   type: 'SET__USERPOSTS',
+                   posts: (res.docs.map(doc => doc.data()))
+               })
+            })
+        }
+        
+    }, [user])
+
+    useEffect(() => {
+        console.log(userPosts)
+    }, [userPosts])
+
+    // useEffect(() => {
+    //     if(user.displayName){
+    //         let userInfo = user.displayName?.split('%20')
+    //         setUsername(userInfo[0]);
+    //         setFullname(userInfo[1]);
+    //     }
+    // }, [user])
 
     return (
         <div className='home'>
             <div className='home__left'>
                 <Header />
-                <CreatePost />
+                <CreatePost 
+                    username={username}
+                    uid = {user.uid? user.uid : ''}
+                    userPhoto = {user.photoURL? user.photoURL : ''} />
                 {posts?.map(post =>(
                     <Post 
                         postImage={post.posts.imageURL}
                         postUser={post.posts.username}
                         postCaption={post.posts.caption}
                         postID = {post.id}
+                        username = {username}
+                        userPhoto = {post.posts.userPhoto? post.posts.userPhoto: ''}
                         key={post.id} />
                 ))}
             </div>
             <div className='home__right'>
-                <h2>{username? username: null}</h2>
+                <SideObject 
+                    username={username? username: ''}
+                    fullname={fullname? fullname: ''}
+                    userPhoto = {user.photoURL} />
             </div>
             
         </div>

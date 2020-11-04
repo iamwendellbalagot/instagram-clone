@@ -66,3 +66,9 @@
   font-size: 15px;
   opacity: 0.8;
 }
+
+.form__controls > button:disabled {
+  color: gray;
+  cursor: default;
+  transform: none;
+}

@@ -10,15 +10,26 @@ import LoginForm from './components/LoginForm/LoginForm';
 import Signup from './components/Signup/Signup';
 
 function App() {
-  const[{user}, dispatch] = useStateValue();
+  const[{user, username, fullname}, dispatch] = useStateValue();
 
   useEffect(() =>{
-    const unsubscribe = auth.onAuthStateChanged(user =>{
-      if(user){
+    const unsubscribe = auth.onAuthStateChanged(userAuth =>{
+      if(userAuth){
+        let userInfo = userAuth.displayName?.split('%20');
         dispatch({
           type:'SET_USER',
-          user:user
+          user:userAuth
         })
+        if(userInfo){
+          dispatch({
+            type: 'SET_USERNAME',
+            username: userInfo[0]
+          })
+          dispatch({
+            type: 'SET_FULLNAME',
+            fullname: userInfo[1]
+          })
+        }
       }else{
         console.log('Not Logged in')
       }
@@ -27,11 +38,8 @@ function App() {
     return () => {
       unsubscribe();
     }
-  }, [user])
+  }, [user, fullname])
 
-  useEffect(() =>{
-    console.log('APP: ', user)
-  },[user])
 
   return (
     <div className="app">

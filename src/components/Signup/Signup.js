@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {useStateValue} from '../../hoc/stateProvider';
 import {Link} from 'react-router-dom';
 import {auth} from '../../firebase';
 import './Signup.css';
@@ -11,9 +12,18 @@ const Signup = () => {
     const [password, setPassword] = useState('');
     const [confPassword, setConfPassword] = useState('');
 
+    const [{user}, dispatch] = useStateValue();
+
     const handleSubmit = event =>{ 
         event.preventDefault();
-        console.log(email, fullname, username, password, confPassword)
+        dispatch({
+            type: 'SET_USERNAME',
+            username: username
+        })
+        dispatch({
+        type: 'SET_FULLNAME',
+        fullname: fullname
+        })
         auth.createUserWithEmailAndPassword(email, password)
         .then( user =>{
             user.user.updateProfile({

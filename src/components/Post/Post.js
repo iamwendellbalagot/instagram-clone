@@ -5,7 +5,7 @@ import './Post.css';
 
 import Avatar from '@material-ui/core/Avatar';
 
-const Post = ({postUser, postImage, postCaption, postID}) => {
+const Post = ({postUser, postImage, postCaption, postID, username, userPhoto}) => {
 
     const [commentBox, setCommentBox] = useState('');
     const [comments, setComments] = useState([]);
@@ -34,7 +34,7 @@ const Post = ({postUser, postImage, postCaption, postID}) => {
         .doc(postID)
         .collection('comments')
         .add({
-            user: 'wendell',
+            user: username,
             comment: commentBox,
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         })
@@ -45,7 +45,10 @@ const Post = ({postUser, postImage, postCaption, postID}) => {
     return (
         <div className='post'>
             <div className='post__header'>
-                <Avatar className='post__header__avatar'/>
+                <Avatar 
+                    style={{fontSize: '10px'}} 
+                    className='post__header__avatar' 
+                    src={userPhoto? userPhoto : ''}>{postUser}</Avatar>
                 <span>{postUser}</span>
             </div>
             <img 

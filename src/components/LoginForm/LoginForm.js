@@ -9,34 +9,25 @@ import { auth } from '../../firebase';
 const LoginForm = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMsg, setErrorMsg] = useState(null);
 
     const [{user}, dispatch] = useStateValue();
-
-    // useEffect(() => {
-    //     const unsubscribe =  auth.onAuthStateChanged(userAuth => {
-    //         if(userAuth){
-    //             dispatch({
-    //                 type:'SET_USER',
-    //                 user:userAuth
-    //             })
-    //             console.log(userAuth)
-    //         }else{
-    //             console.log('Not logged in')
-    //         }
-    //     })
-
-    //     return () => {
-    //         unsubscribe();
-    //     }
     // }, [user])
 
     const handleSubmit = (e) => {
         e.preventDefault()
         auth.signInWithEmailAndPassword(email, password)
-        .catch(err => console.log(err.message))
+        .catch(err => {
+            console.log(err.code)
+            setErrorMsg(err.code)
+        })
         setPassword('')
         setEmail('')
     }
+
+    useEffect(() => {
+        console.log(errorMsg)
+    }, [errorMsg])
 
     return (
         <div className='loginform'>
@@ -46,10 +37,12 @@ const LoginForm = (props) => {
                     <input 
                         type='email'  
                         placeholder='Type your email here'
+                        className= {`login__form__input ${errorMsg==='auth/user-not-found' && 'error'}`}
                         value={email} 
                         onChange={(e)=>setEmail(e.target.value)} />
                     <input 
-                        type='password' 
+                        type='password'
+                        className= {`login__form__input ${errorMsg==='auth/wrong-password' && 'error'}`}
                         placeholder='Password'
                         value={password} 
                         onChange={(e) => setPassword(e.target.value)} />
