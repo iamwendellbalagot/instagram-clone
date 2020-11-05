@@ -13,8 +13,17 @@
   flex: 0.3;
   max-height: 500px;
   /* background-color: white; */
-  margin-right: 10%;
+  margin-right: 170px;
   width: 100%;
   /* border: 1px solid #dbdbdb;
   border-radius: 5px; */
+}
+
+@media (max-width: 768px) {
+  .home__right {
+    display: none;
+  }
+  .home__left {
+    flex: 1;
+  }
 }

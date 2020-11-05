@@ -33,3 +33,12 @@
 .header__user > button:hover {
   transform: scale(1.1);
 }
+
+@media (max-width: 768px) {
+  .header__user {
+    margin-right: 5%;
+  }
+  .header > img {
+    margin-left: 5%;
+  }
+}

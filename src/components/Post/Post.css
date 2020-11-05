@@ -65,3 +65,9 @@
 .post__form > button:hover {
   transform: scale(1.08);
 }
+
+@media (max-width: 768px) {
+  .post {
+    margin: 30px auto;
+  }
+}

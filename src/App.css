@@ -4,3 +4,9 @@
 
   background-color: #fafafa;
 }
+
+@media (min-height: 100vh) {
+  .app {
+    height: 100%;
+  }
+}

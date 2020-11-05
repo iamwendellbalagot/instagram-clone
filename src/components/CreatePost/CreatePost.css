@@ -72,3 +72,9 @@
   cursor: default;
   transform: none;
 }
+
+@media (max-width: 768px) {
+  .createpost {
+    margin: auto;
+  }
+}

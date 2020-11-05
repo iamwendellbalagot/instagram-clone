@@ -5,11 +5,12 @@ import Backdrop from '@material-ui/core/Backdrop';
 import { useSpring, animated } from 'react-spring/web.cjs';
 import Avatar from '@material-ui/core/Avatar';
 import LinearProgress from '@material-ui/core/LinearProgress'
+import firebase from 'firebase';
 
 import './Modal.css';
 
 import {useStateValue} from '../../hoc/stateProvider';
-import { auth, storage } from '../../firebase';
+import { auth, storage, db } from '../../firebase';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -56,10 +57,23 @@ export default function SpringModal() {
   const [open, setOpen] = useState(false);
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
-  const [userPhoto, setUserPhoto] = useState('');
+  const [userPhoto, setUserPhoto] = useState(null);
   const [uploadedPhoto, setUploadedPhoto] = useState(null);
   const [progress, setProgress] = useState(0);
   const [{user, fullname, username}, dispatch] = useStateValue();
+
+  useEffect(() => {
+    if(userPhoto){
+      db.collection('posts')
+      .where('userUID', '==', user.uid)
+      .get()
+      .then(snapshot => {
+        snapshot.docs.forEach( doc =>{
+          db.collection('posts').doc(doc.id).update({userPhoto: userPhoto})
+        })
+      });
+    }
+  }, [userPhoto])
 
   const handleOpen = () => {
     setOpen(true);
@@ -90,7 +104,6 @@ export default function SpringModal() {
                 type: 'SET_FULLNAME',
                 fullname: userFullname
             })
-            console.log('User Updated')
         })
         .catch(err => console.log(err.message))
     })
@@ -113,22 +126,22 @@ export default function SpringModal() {
                 .ref('images')
                 .child(uploadedPhoto.name)
                 .getDownloadURL()
-                .then(res => {
+                .then(url => {
                     auth.onAuthStateChanged(userAuth => {
                         userAuth.updateProfile({
-                            photoURL: res
+                            photoURL: url
                         })
                         .then(res => {
                             dispatch({
                                 type: 'SET_USER',
                                 user: userAuth
                             })
-                            console.log('Updated user photo')
+                            setUserPhoto(url)
                             setProgress(0);
                             setUploadedPhoto(null);
                         })
                         .catch(err => console.log(err.message))
-                    })
+                    });
                 })
             }
         )
@@ -158,12 +171,12 @@ export default function SpringModal() {
           <div className={`modal__contents ${classes.paper}`}>
             {/* <h2>Edit Profile</h2> */}
             <div className='modal__contents__left'>
-                {!uploadedPhoto?<Avatar src={user?.photoURL} style={{height: '120px', width:'120px'}} >wendell</Avatar>
+                {!uploadedPhoto?<Avatar src={user?.photoURL} style={{height: '120px', width:'120px'}} >{username}</Avatar>
                 :<img
                     src={uploadedPhoto?URL.createObjectURL(uploadedPhoto): ''}
                     alt='Profile' />}
                 <LinearProgress variant='determinate' value={progress} style={{width:'100%', margin:'5px auto'}} />
-                <label>Upload<input type='file' onChange={(e) => setUploadedPhoto(e.target.files[0])} /></label>
+                <label>Choose<input type='file' onChange={(e) => setUploadedPhoto(e.target.files[0])} /></label>
             </div>
             <div className='modal__contents__right'>
                 <input 

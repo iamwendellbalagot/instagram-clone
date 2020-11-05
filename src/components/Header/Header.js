@@ -16,6 +16,7 @@ const Header = () => {
             type: 'SET_USER',
             user: null
         })
+        window.location.reload();
     }
 
     return (
