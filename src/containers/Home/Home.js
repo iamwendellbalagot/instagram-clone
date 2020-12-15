@@ -12,9 +12,6 @@ const Home = () => {
 
     const [posts, setPost] = useState([]);
     const [{user, username, fullname, userPosts}, dispatch] = useStateValue();
-    // const [username, setUsername] = useState('')
-    // const [fullname, setFullname] = useState('');
-
 
     useEffect(() =>{
         db.collection('posts')
