@@ -18,8 +18,8 @@
 
 .loginform__login > img {
   object-fit: contain;
-  height: 50px;
-  margin-bottom: 20px;
+  height: 45px;
+  margin-bottom: 30px;
 }
 
 .loginform__signup {
@@ -91,4 +91,10 @@
 
 .error:focus {
   border: 2px solid salmon;
+}
+
+@media (max-width: 500px) {
+  .loginform__login {
+    margin-right: 25px;
+  }
 }

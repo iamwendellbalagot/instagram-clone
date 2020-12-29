@@ -22,7 +22,7 @@ const Header = () => {
     return (
         <div className='header'>
             <img 
-                src='https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png'
+                src='logo_insta.png'
                 alt='Logo'/>
             <div className='header__user'>
                 <button onClick={handleSignOut}>Logout</button>

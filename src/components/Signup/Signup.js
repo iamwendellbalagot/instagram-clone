@@ -57,7 +57,7 @@ const Signup = () => {
     return (
         <div className='signup'>
             <div className='signup__container'>
-                <img src='https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png' alt='LOGO' />
+                <img src='logo_insta.png' alt='LOGO' />
                 <h3>Sign up to see photos and videos from your friends.</h3>
                 <form className='signup__form' onSubmit={handleSubmit} >
                     <input 
